@@ -15,6 +15,8 @@ public:
     virtual Data decode(const Data& data) = 0;
 };
 
+CryptoType parseCryptoType(const std::string& type);
 std::shared_ptr<ICrypto> makeCrypto(CryptoType type, const Data& password);
+
 
 #endif // CRYPTOGRAPHER_H
