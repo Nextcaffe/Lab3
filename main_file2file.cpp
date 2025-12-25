@@ -1,6 +1,3 @@
-#include <iostream>
-#include <iomanip>
-#include <memory>
 #include <string>
 #include <vector>
 #include "File_interaction.h"
