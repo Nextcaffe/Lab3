@@ -5,9 +5,11 @@
 #include <string>
 #include "Cryptographer.h"
 
-using Data = std::vector<uint8_t>;
-using Text = const std::string&;
+using Data1 = std::vector<uint8_t>;
+using Data2 = std::vector<std::string>;
+using Text = std::string;
 
-Data transformation_message(Text TypeOfMethod, Text password, Text TypeOfOperation, Text input_message);
+Text transformation_message(const Text& TypeOfMethod, const Text& password, 
+    const Text& TypeOfOperation, const Text& input_message);
 
 #endif //FILE_INTERACTION_H
