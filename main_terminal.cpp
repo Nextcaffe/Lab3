@@ -1,6 +1,4 @@
 #include <iostream>
-#include <iomanip>
-#include <memory>
 #include <string>
 #include <vector>
 #include "File_interaction.h"
@@ -17,7 +15,7 @@ int main(int argc, char ** argv)
         input_message += argv[i];
     }
 
-    auto output_message = transformation_message(TypeOfMethod, password, TypeOfOperation, input_message);
+    std::string output_message = transformation_message(TypeOfMethod, password, TypeOfOperation, input_message);
 
     if (TypeOfOperation == "1") {
         std::cout << "Encrypted message:" << std::endl;
@@ -28,8 +26,9 @@ int main(int argc, char ** argv)
     }
     
     for (size_t i = 0; i < output_message.size(); i++) {
-            std::cout << std::hex << static_cast<int>(output_message[i]) << std::setw(add_separator);
-        }
+        // std::cout << output_message[i] << std::setw(add_separator);
+        std::cout << output_message[i];
+    }
     std::cout << std::endl;
 
 }
