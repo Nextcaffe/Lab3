@@ -6,13 +6,12 @@
 #include "readcreatefileenc.h"
 
 std::string readfile(const std::string& pattern, int aenc) {
-
-    if ( aenc !=1 && aenc != 2) {
+    if (aenc != 1 && aenc != 2) {
         throw std::runtime_error("Unknown operation");
     }
     std::vector<std::string> foundFiles;
 
-    std::string searchStr = (aenc == 1) ? "notenc" : "enc";
+    std::string searchStr = (aenc == 1) ? "input" : "output";
 
     for (const auto& entry : std::filesystem::directory_iterator(".")) {
         std::string name = entry.path().filename().string();
@@ -44,20 +43,19 @@ std::string readfile(const std::string& pattern, int aenc) {
     }
 
     std::string input_massage;
-    fin >> input_massage; 
+    fin >> input_massage;
     fin.close();
 
     return input_massage;
 }
 
 void createEncfile(const std::string& pattern, const std::string& output_massage, int aenc) {
-    if ( aenc !=1 && aenc != 2) {
+    if (aenc != 1 && aenc != 2) {
         throw std::runtime_error("Unknown operation");
     }
     
-    
     std::vector<std::string> foundFiles;
-    std::string sttr = (aenc == 1) ? "notenc" : "enc";
+    std::string sttr = (aenc == 1) ? "input" : "output";
 
     for (const auto& entry : std::filesystem::directory_iterator(".")) {
         std::string name = entry.path().filename().string();
@@ -83,17 +81,27 @@ void createEncfile(const std::string& pattern, const std::string& output_massage
 
     std::string inputFile = foundFiles[0];
 
-    std::string outputFile = inputFile;
+    std::string baseOutputFile = inputFile;
     if (aenc == 1) { 
-        size_t pos = outputFile.find("notenc");
+        size_t pos = baseOutputFile.find("input");
         if (pos != std::string::npos) {
-            outputFile.replace(pos, 6, "enc");
+            baseOutputFile.replace(pos, 5, "output");
         }
     } else {
-        size_t pos = outputFile.find("enc");
+        size_t pos = baseOutputFile.find("output");
         if (pos != std::string::npos) {
-            outputFile.replace(pos, 3, "notenc");
+            baseOutputFile.replace(pos, 6, "input");
         }
+    }
+
+    std::string outputFile = baseOutputFile;
+
+    std::string baseName = baseOutputFile.substr(0, baseOutputFile.find_last_of('.'));
+    std::string extension = baseOutputFile.substr(baseOutputFile.find_last_of('.'));
+
+    int counter = 1;
+    while (std::filesystem::exists(outputFile)) {
+        outputFile = baseName + " (" + std::to_string(counter++) + ")" + extension;
     }
 
     std::ofstream fout(outputFile);
@@ -106,4 +114,3 @@ void createEncfile(const std::string& pattern, const std::string& output_massage
 
     std::cout << "File: " << outputFile << " created" << std::endl;
 }
-

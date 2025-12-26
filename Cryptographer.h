@@ -5,18 +5,18 @@
 #include <vector>
 #include <memory>
 
-using Data1 = std::vector<uint8_t>;
-using Data2 = std::vector<std::string>;
+using Data = std::vector<uint8_t>;
 
-enum class CryptoType {Dummy, XOR, Caesar};
+enum class CryptoType {Dummy, XOR, Caesar, Segment, XOR_Segment, Caesarm_Segment};
 
 class ICrypto {
 public:
-    virtual Data2 encode(const Data1& data) = 0;
-    virtual Data1 decode(const Data2& data) = 0;
+    virtual Data encode(const Data& data) = 0;
+    virtual Data decode(const Data& data) = 0;
+    virtual ~ICrypto() = default;
 };
 
-std::shared_ptr<ICrypto> makeCrypto(CryptoType type, const Data1& password);
+std::shared_ptr<ICrypto> makeCrypto(CryptoType type, const Data& password);
 CryptoType parseCryptoType(const std::string& type);
 
 #endif // CRYPTOGRAPHER_H

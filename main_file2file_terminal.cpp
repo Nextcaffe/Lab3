@@ -4,24 +4,21 @@
 #include "File_interaction.h"
 #include "readcreatefileenc.h"
 
-int main() {
+int main(int argc, char ** argv) {
+
+    bool add_separator = false;
     std::string pattern, TypeOfMethod, password, TypeOfOperation;
-    
-    std::cout << "Enter method of Cryptographer: ";
-    std::getline(std::cin, TypeOfMethod, '\n');
-    std::cout << "Enter password: ";
-    std::getline(std::cin, password, '\n');
-    std::cout << "Choose what to do:" << std::endl << "1 - encode, 2 - decode: ";
-    std::getline(std::cin, TypeOfOperation, '\n');
-    std::cout << "Enter a part or a full name of file for search: ";
-    std::getline(std::cin, pattern, '\n');
+    TypeOfMethod = argv[1];
+    password = argv[2];
+    TypeOfOperation = argv[3];
+    pattern = argv[4];
 
     int aenc = std::stoi(TypeOfOperation); 
     std::string input_message = readfile(pattern, aenc);
     std::string output_message = transformation_message(TypeOfMethod, password, TypeOfOperation, input_message);
 
     
-    if (!input_message.empty()) {
+    if (!output_message.empty()) {
         // std::cout << input_massage << std::endl;
         createEncfile(pattern, output_message, aenc);
     }

@@ -11,7 +11,7 @@ int main(int argc, char ** argv)
     password = argv[2];
     TypeOfOperation = argv[3];
     
-    for (int i = 4; i < argc; i++) {
+    for (size_t i = 4; i < argc; i++) {
         input_message += argv[i];
     }
 
